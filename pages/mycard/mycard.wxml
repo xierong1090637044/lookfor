@@ -1,0 +1,30 @@
+
+<view  class='allcontent'>
+   <view class='content'>
+    <view style='text-align:center'>
+    <view style='float:right;line-height:8vh;margin: 1vh 0 0 3vh;'>
+       <text class='cardname'>{{mycard.name}}</text>
+       <text class='zhiweitext'>({{mycard.zhiwei}})</text>
+      </view>
+       <image src='{{mycard.tx}}' class='avatar'></image>
+    </view>
+     <view class='companyname'>{{mycard.companyname}}</view>
+     <view style='margin-bottom:1vh'>
+       <view class='icon1'><i class="icon iconfont icon-didian"></i></view>
+       <view class='common'>{{mycard.companyloc}}</view>
+     </view>
+     <view style='margin-bottom:1vh'>
+       <view class='icon1'><i class="icon iconfont icon-dianhua"></i> </view>
+       <view class='common' bindtap='cancopy' data-id='{{mycard.phone}}'>{{mycard.phone}}</view>
+      </view>
+     <view style='margin-bottom:1vh'>
+      <view class='icon1'><i class="icon iconfont icon-youxiang"></i></view>
+      <view class='common'>{{mycard.youxiang}}</view>
+     </view>
+   </view>
+   <view class='backgroundimg'>
+     <image src='{{mycardbj.imgs.url}}' style='width:100%;height:35vh' class='mycardbj'></image>
+   </view>
+
+   <view class='noticetext'>{{mycard.mpbiaoyu}}</view>
+</view>

@@ -1,0 +1,200 @@
+/* pages/company/company.wxss */
+.MianContent
+{
+  width: calc(100% - 20px);
+  background: #a3d0d9;
+  height: calc(100vh - 20px);
+  padding: 10px;
+  position: relative;
+}
+.itemall
+{
+  height: 50vh;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 5%;
+  border: 1px solid#000;
+  border-radius: 4px;
+}
+.item{
+  width: 80%;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid#000;
+  padding: 20px 0px 2px;
+  margin: 0 auto;
+}
+
+/*创建公司*/
+.mask
+{
+  position: fixed;
+  top:0%;
+  height: 100vh;
+  width: 100%;
+  background: #000;
+  opacity: 0.7;
+  z-index: 100;
+}
+.form
+{
+  width: calc(70% - 20px);
+  position: fixed;
+  top: 12%;
+  left: 15%;
+  border: 1px solid#fff;
+  border-radius: 4px;
+  padding: 10px 10px 10px 10px;
+  z-index: 101;
+  background: rgb(23, 44, 60);
+  text-align: center;
+}
+.section
+{
+  margin-bottom: 10px;
+  float: left;
+  width: 100%;
+}
+.companyname
+{
+  float: left;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+.inputcname
+{
+  height: 30px;
+  line-height: 30px;
+  min-height: unset;
+  border-bottom: 1px solid#fff;
+  font-size: 14px;
+  color: #fff;
+  float: left;
+  margin-left: 10px;
+}
+.inputcname1
+{
+  height: 30px;
+  line-height: 30px;
+  min-height: unset;
+  border-bottom: 1px solid#fff;
+  font-size: 14px;
+  color: #fff;
+  float: left;
+  margin-left: 23px;
+
+}
+.inputcname2
+{
+  height: 30px;
+  width: 157px;
+  border-bottom: 1px solid#fff;
+  line-height: 30px;
+  min-height: unset;
+  font-size: 14px;
+  color: #fff;
+  float: left;
+  margin-left: 6px;
+}
+.btn-area
+{
+  float: left;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.button
+{
+  width: 40%;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 auto;
+  font-size: 15px;
+}
+.qiandaoimg
+{
+  width: 30px;
+  height: 30px;
+  margin: 5px 0px 0px 10px;
+}
+.displaynone
+{
+  display: none;
+}
+.addinputstyle
+{
+  padding-top: 5px;
+}
+
+/*加入公司**/
+.createheader
+{
+  float: left;
+  height: 100vh;
+  width: calc(100% - 20px);
+  padding: 10px 10px;
+  text-align: center;
+  background: rgb(0, 34, 40)
+}
+.ssimg
+{
+  float: left;
+  width: 37px !important;
+  height: 37px !important;
+  margin-left: 22%;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  margin-top: 20px;
+}
+.ssinput
+{
+  float: left;
+  height: 35px;
+  line-height: 35px;
+  border:1px solid#fff;
+  border-left: unset;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 13px;
+  color: #fff;
+  margin-top: 20px;
+}
+.companylist
+{
+  float:left;
+  width:98%;
+  line-height:30px;
+  padding:3px 4px 4px;
+  border-bottom:1px solid#fff;
+  color: #fff;
+  height: 60px;
+}
+.companyname1
+{
+  float: left;
+  width: 70%;
+  text-align: left;
+  font-size: 15px
+}
+.companyloc
+{
+  float: left;
+  font-size: 13px;
+}
+.companyjoin
+{
+  float: right;
+  color: rgb(23, 146, 184);
+  margin-top: 12px;
+  font-size: 15px;
+}
+.createtext
+{
+  color: #fff;
+  float:left;
+  width:100%;
+  font-size:15px;
+  margin-top: 110px;
+}

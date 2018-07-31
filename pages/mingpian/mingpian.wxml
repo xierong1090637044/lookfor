@@ -1,0 +1,136 @@
+<!--pages/lookfor/lookfor.wxml-->
+<import src="../../component/toastTest/toastTest.wxml"/>
+<template is="toast" data="{{ ..._toast_ }}"/>
+<view class="container1">
+<view class='settingimg' animation='{{animationData}}' bindtap='setting'>
+  <image src='../../images/setting.png' style='width:100%;height:100%'/>
+</view>
+<view class='settingimg' animation='{{animationData1}}' bindtap='add' style='bottom:20% !important;opacity:0;'>
+  <image src='../../images/add.png' style='width:100%;height:100%'/>
+</view>
+<view class='settingimg' animation='{{animationData1}}' bindtap='mymp' style='bottom:30% !important;opacity:0;'>
+  <image src='../../images/mymp.png' style='width:100%;height:100%'/>
+</view>
+<view class='settingimg' animation='{{animationData1}}' bindtap='modify' style='bottom:40% !important;opacity:0;'>
+  <image src='../../images/modify.png' style='width:100%;height:100%'/>
+</view>
+<view class='settingimg' animation='{{animationData1}}' bindtap='paixu' style='bottom:50% !important;opacity:0;'>
+  <image src='../../images/paixu.png' style='width:100%;height:100%'/>
+</view>
+<view class='settingimg' animation='{{animationData1}}' bindtap='sousuo1' style='bottom:60% !important;opacity:0;'>
+  <image src='../../images/sousuo1.png' style='width:100%;height:100%'/>
+</view>
+
+<scroll-view scroll-y class='scrollheight' bindscrolltolower = 'scroll'>
+  <view wx:for='{{allcard}}' wx:key='{{index}}' class='itemcard' data-id='{{item.objectId}}' bindlongpress='modifyanddelete'>
+   <image src='{{allcardbg.url}}' class='allcardbg'></image>
+     <view class='nameandposition'>
+       <text class='cardname'>{{item.name}}</text>
+       <text class='cardzw'>（{{item.zhiwei}}）</text>
+     </view>
+     <view class='companyname1'>{{item.companyname}}</view>
+     <view class='companyloc'>
+         <view class='icon1'><i class="icon iconfont icon-didian"></i></view>
+         <view class='common'>{{item.companyloc}}</view>
+      </view>
+     <view class='phone'>
+       <view class='icon2'><i class="icon iconfont icon-dianhua"></i></view>
+        <view class='common1' bindtap='cancopy' data-id='{{item.phone}}'>{{item.phone}}</view>
+      </view>
+     <view class='youxiang'>
+       <view class='icon2'><i class="icon iconfont icon-youxiang"></i></view>
+       <view class='common1'>{{item.youxiang}}</view>
+      </view>
+    </view>
+    <view bindtap='goback' class='goback' style='display:{{gobackdisplay}}'>返回</view>
+</scroll-view>
+</view>
+
+<!--创建名片-->
+<view class='mask' style='display:{{maskandform}}' bindtap='hidden'></view>
+<view class='form' style='display:{{maskandform}}'>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section">
+      <image src='{{userinfor}}' class='avatar' bindtap='uploadimg'></image>
+      <input name="input0" style='display:none' bindfocus='' value='{{userinfor}}'/>
+      <!--<view class='modifyavatar' bindtap='uploadimg'>修改</view>-->
+  </view>
+   <view class="section">
+      <view class="companyname">  姓名：</view>
+      <input name="input1" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='4'  bindfocus='' placeholder="姓名" value='{{name}}'/>
+    </view>
+     <view class="section">
+      <view class="companyname">职位：</view>
+      <input name="input2" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='6'  bindfocus='' placeholder="职位" value='{{zhiwei}}'/>
+    </view>
+     <view class="section">
+      <view class="companyname">联系电话：</view>
+      <input name="input3" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='11' placeholder="联系电话" type='number' bindfocus='' value='{{phone}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">联系邮箱：</view>
+      <input name="input4" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='20' placeholder="联系邮箱" type='text' bindfocus='' value='{{youxiang}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">公司名称：</view>
+      <input name="input5" placeholder="公司名称" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='20' bindfocus='' value='{{companyname}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">公司地址：</view>
+      <input name="input6" placeholder="公司地址" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='30' value='{{companyloc}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">名片标语：</view>
+      <input name="input7" placeholder="名片标语" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='20' value='{{mpbiaoyu}}'/>
+    </view>
+    <view class="btn-area">
+      <button formType="submit" class='button'>提交</button>
+    </view>
+  </form>
+</view>
+
+<!--增加名片-->
+<view class='mask' style='display:{{maskandform1}}' bindtap='hidden'></view>
+<view class='form1' style='display:{{maskandform1}}'>
+  <form bindsubmit="formSubmit1" bindreset="formReset">
+   <view class="section1">
+      <view class="companyname">  姓名：</view>
+      <input name="input1" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='4'  bindfocus='' placeholder="姓名" value='{{allcarditem.name}}'/>
+    </view>
+     <view class="section">
+      <view class="companyname">职位：</view>
+      <input name="input2" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='6'  bindfocus='' placeholder="职位" value='{{allcarditem.zhiwei}}'/>
+    </view>
+     <view class="section">
+      <view class="companyname">联系电话：</view>
+      <input name="input3" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='11' placeholder="联系电话" type='number' bindfocus='' value='{{allcarditem.phone}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">联系邮箱：</view>
+      <input name="input4" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='20' placeholder="联系邮箱" type='text' bindfocus='' value='{{allcarditem.youxiang}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">公司名称：</view>
+      <input name="input5" placeholder="公司名称" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='20' bindfocus='' value='{{allcarditem.companyname}}'/>
+    </view>
+    <view class="section">
+      <view class="companyname">公司地址：</view>
+      <input name="input6" placeholder="公司地址" class='inputcname' placeholder-style='color:#e2e0e0;font-size:14px;' maxlength='30' value='{{allcarditem.companyloc}}'/>
+    </view>
+    <view class="btn-area">
+      <button formType="submit" class='button'>提交</button>
+    </view>
+  </form>
+</view>
+
+<view class='mask' style='display:{{ssitem}}' bindtap='hidden1'></view>
+<view class='ssitem' style='display:{{ssitem}}'>
+   <image src='../../images/suosou.png' class='ssimg'></image>
+   <input placeholder="请输入姓名"  placeholder-style='color:#fff' type="text" class='ssinput' confirm-type='search' bindconfirm='sousuo'/>
+</view>
+
+<view class='nocontentimgview' style="display:{{nocontent}}">
+  <image src='{{nocontentimg}}' class='nocontentimg' ></image>
+  <view class='nocontenttext'>暂时未添加名片</view>
+</view>
+

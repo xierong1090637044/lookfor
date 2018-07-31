@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/personcenter/personcenter",
+    "pages/mingpian/mingpian",
+    "pages/mycard/mycard",
+    "pages/mycompany/mycompany",
+    "pages/company/company",
+    "pages/joincompany/joincompany"
+  ],
+  "window": {
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#660000",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "iconPath": "images/mine.png",
+        "selectedIconPath": "images/mine1.png",
+        "pagePath": "pages/personcenter/personcenter",
+        "text": "首页"
+      },
+      {
+        "iconPath": "images/partner.png",
+        "selectedIconPath": "images/partner1.png",
+        "pagePath": "pages/mingpian/mingpian",
+        "text": "名片"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": false
+}

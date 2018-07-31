@@ -1,0 +1,108 @@
+ <!--pages/mycompany/mycompany.wxml-->
+<view class='MainContain'>
+  <view class='companyitem'>
+    <text>公司：</text>
+    <text>{{company.company}}</text>
+  </view>
+  <view class='companyitem' style='display:inline-block'>
+    <text>创建人：</text>
+    <text>{{master.parent.nickName}}</text>
+  </view>
+  <view class='companyitem'>
+    <text>签到地点：</text>
+    <text>{{company.localtion}}</text>
+  </view>
+  <view class='companyitem'>
+    <text>创建时间：</text>
+    <text>{{company.createdAt}}</text>
+  </view>
+  <view class='icon1'><i class="icon iconfont icon-lvyou1"></i> </view>
+</view>
+
+<view class='floatmain'>
+  <view class='floatleftitem'>
+     <view data-id='公司成员' class="{{dataid == '公司成员' ? 'floatitem2' : 'floatitem1'}}" bindtap='getdataid'>公司成员</view>
+     <view data-id='我的出勤' class="{{dataid == '我的出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>我的出勤</view>
+     <view data-id='全部出勤' class="{{dataid == '全部出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>全部出勤</view>
+     <view data-id='申请列表' class="{{dataid == '申请列表' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>申请列表</view>
+     <view class='tuichu' bindtap='goout'>退出</view>
+  </view>
+
+  <!--公司成员列表-->
+  <view class="floatrightitem {{dataid == '公司成员' ? 'displayshow' : 'displaynone'}}">
+     <view wx:for="{{members}}" wx:key="{{index}}" style='float:left;width:100%'>
+        <view class='itemlist1'>
+          <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
+           <view class='nickname'>
+             <view>
+               <view style='display:inline-block'>{{item.parent.nickName}}</view>
+               <view class="modifylx {{userid == item.parent.objectId ? 'displayshow' : 'displaynone'}}" data-id='{{item.objectId}}' bindtap='modifylx'>修改</view>
+              </view>
+             <view>
+              <text style='font-size:12px'>联系方式：{{item.phone}}</text>
+             </view>
+           </view>
+        </view>
+     </view>
+  </view>
+
+  <!--全部考勤列表-->
+  <view class="floatrightitem {{dataid == '全部出勤' ? 'displayshow' : 'displaynone'}}">
+     <view wx:for="{{memberallqd}}" wx:key="{{index}}" style='float:left;width:100%'>
+        <view class='itemlist1'>
+          <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
+           <view class='nickname'>
+             <view>
+               <view style='display:inline-block'>{{item.parent.nickName}}</view>
+              </view>
+             <view>
+                <text>本月签到：<text style='color:#2ca879'>{{item.common}}</text></text>
+                <text class='latertext'>本月迟到：<text style='color:#f30'>{{item.later}}</text></text>
+              </view>
+           </view>
+        </view>
+     </view>
+  </view>
+
+    <!--申请列表-->
+  <view class="floatrightitem {{dataid == '申请列表' ? 'displayshow' : 'displaynone'}}">
+     <view wx:for="{{request}}" wx:key="{{index}}" class='itemlist1'>
+          <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
+          <view class='nickname1'>
+            <view class='requestnickname'>{{item.parent.nickName}}</view>
+            <view class='agree' bindtap='agree' style='color:#2ca879' data-id='{{item.objectId}}'>同意</view>
+            <view class='agree' bindtap='refuse' style='color:#f30' data-id='{{item.objectId}}'>拒绝</view>
+          </view>
+     </view>
+  </view>
+
+  <!--我的出勤-->
+  <view class="floatrightitem {{dataid == '我的出勤' ? 'displayshow' : 'displaynone'}}" style='text-align:center'>
+  <view style='display:{{haveqiandao}}'>
+    <view style='margin-top:20px;'>
+      <image src='{{qiandao[0].parent.avatarUrl}}' class='avatar' style='float:unset !important;margin-right:unset !important'></image>
+      <view class='nickname1' style='float:unset !important;text-align:center'>
+        <view class='requestnickname' style='float:unset !important;width:100% !important'>{{qiandao[0].parent.nickName}}</view>
+      </view>
+    </view>
+    <view style='font-size:15px;margin-top:20px;'>
+       <text>当月累计签到：</text><text style='color:#f30;font-size:18px'>{{allqiandao}}</text>
+    </view>
+    <view style='font-size:15px;margin-top:20px;line-height:28px;'>
+       <view><text>迟到：</text><text style='color:#f30;font-size:18px'>{{qiandao[0].later}}</text></view>
+       <view><text>正常：</text><text style='color:#2ca879;font-size:18px'>{{qiandao[0].common}}</text></view>
+    </view>
+   </view>
+   <view style='display:{{noqiandao}};font-size:15px;color:#f30;margin-top:40%;'>您还没有进行过签到！</view>
+  </view>
+</view>
+
+
+<!--修改联系方式-->
+  <view class='mask' style='display:{{modifydisplay}}' bindtap='hidden1'></view>
+  <view style='display:{{modifydisplay}}' class='dhitem'>
+     <input maxlength='11' type='number' class='dhinput' placeholder='请输入联系方式' placeholder-style='color:#fff;font-size:14px;' bindconfirm = 'qrmodify' bindinput="bindKeyInput"></input>
+     <button class='dhbutton' bindtap='qrmodify'>确认</button>
+  </view>
+
+

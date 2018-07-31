@@ -1,0 +1,22 @@
+
+<!--加入公司-->
+<view  class='createheader'>
+   <image src='../../images/suosou.png' class='ssimg'></image>
+   <input placeholder="请输入公司的名字" type="text" class='ssinput' confirm-type='search' bindconfirm='sousuo' bindblur='sousuo'/>
+
+   <view style='float:left;width:calc(100% - 20px);margin-top:40px;height:60vh;overflow-y:scroll;display:{{display1}};overflow-x:hidden;padding:0 10px'>
+      <view wx:for='{{company}}' wx:key='{{index}}' class='companylist'>
+         <view class='companyname1'>公司名：{{item.company}}</view>
+         <view class='companyjoin' data-id='{{item.objectId}}' bindtap='shenqingjr'>申请加入</view>
+         <view class='companyloc'>信息：{{item.localtion}}</view>
+      </view>
+   </view>
+
+   <view style='display:{{display2}}' class='createtext'>
+     <text>未找到该公司</text>
+     <text style='padding:0px 5px;font-size:18px' bindtap='gotocreate'>去创建 >></text>
+   </view>
+   <view style='background:#fff' class='bottomimg'>
+      <image src='{{img}}' style='width:75%;height:17vh'></image>
+   </view>
+</view>

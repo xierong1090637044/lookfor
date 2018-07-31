@@ -1,0 +1,332 @@
+@import "../../iconfont.wxss";
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}
+.container1{
+  height: 100vh;
+  background:rgb(32,36,46);
+}
+.create
+{
+  color: #fff;
+}
+.createitem
+{
+  position: absolute;
+  top:10%;
+}
+.settingimg
+{
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  position: fixed;
+  bottom: 10%;
+  right: -2%;
+  box-shadow: 0px 0px 10px #000;
+  z-index: 99;
+}
+
+/*创建公司*/
+.modifyavatar
+{
+  width:50px;
+	height:18px;
+	background-color: #fff;
+	border-radius:0px 0px 18px 18px;
+  position: absolute;
+  top:55%;
+  left: calc(50% - 26px);
+  display: unset !important;
+  font-size: 10px;
+  line-height: 18px;
+}
+.avatar
+{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border:1px solid#fff;
+}
+.mask
+{
+  position: fixed;
+  top:0%;
+  height: 100vh;
+  width: 100%;
+  background: #000;
+  opacity: 0.7;
+  z-index: 100;
+}
+.form
+{
+  width: calc(80% - 20px);
+  height: 80vh;
+  overflow: scroll;
+  position: fixed;
+  top: 8%;
+  left: 10%;
+  border: 1px solid#fff;
+  border-radius: 4px;
+  padding: 10px 10px 10px 10px;
+  z-index: 101;
+  background: rgb(23, 44, 60);
+  text-align: center;
+}
+.form1
+{
+  width: calc(80% - 20px);
+  height: 62vh;
+  overflow: scroll;
+  position: fixed;
+  top: 9%;
+  left: 10%;
+  border: 1px solid#fff;
+  border-radius: 4px;
+  padding: 10px 10px 10px 10px;
+  z-index: 101;
+  background: rgb(23, 44, 60);
+  text-align: center;
+}
+.section
+{
+  margin-bottom: 10px;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.section1
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.companyname
+{
+  width: 70px;
+  text-align: right;
+  display: inline-block;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+.inputcname
+{
+  height: 25px;
+  line-height: 25px;
+  min-height: unset;
+  border-bottom: 1px solid#fff;
+  font-size: 14px;
+  color: #fff;
+  display: inline-block;
+  margin-right:10px;
+}
+.btn-area
+{
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.button
+{
+  width: 40%;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 auto;
+  font-size: 15px;
+}
+.qiandaoimg
+{
+  width: 30px;
+  height: 30px;
+  margin: 5px 0px 0px 10px;
+}
+.displaynone
+{
+  display: none;
+}
+.addinputstyle
+{
+  padding-top: 5px;
+}
+.scrollheight
+{
+  height: 98vh;
+  overflow-y: scroll;
+  color: #fff;
+}
+.allcardbg
+{
+  width: 92vw;
+  height: 32vh;
+  margin: 2vw 4vw;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px f2f2f2;
+}
+.nameandposition
+{
+  position: absolute;
+  top:20%;
+  left: 8%;
+  color: #000;
+}
+.cardzw
+{
+  font-style: italic;
+  font-size: 15px;
+}
+.cardname
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+.itemcard
+{
+  position: relative;
+}
+.companyname1
+{
+  position: absolute;
+  top:42%;
+  left: 8%;
+  color: #000;
+  font-size: 18px;
+  overflow: scroll;
+  white-space: nowrap;
+  max-width: 52vw;
+  font-weight:bold;
+}
+.companyloc
+{
+  position: absolute;
+  top:57%;
+  left: 8%;
+  color: #000;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.phone
+{
+  position: absolute;
+  top:72%;
+  right: 10%;
+  color: #000;
+  font-size: 15px;
+}
+.youxiang
+{
+  position: absolute;
+  top:82%;
+  right: 10%;
+  color: #000;
+  font-size: 15px;
+}
+.icon1{
+  display: inline-block;
+  margin-right: 1vw;
+}
+.common
+{
+  width: 45vw;
+  display: inline-block;
+  overflow: scroll;
+  white-space: nowrap;
+  line-height: 14px;
+}
+.common1
+{
+  display: inline-block;
+  line-height: 14px;
+  text-align: right;
+  font-size: 14px;
+  overflow: scroll;
+  white-space: nowrap;
+  max-width: 50vw;
+}
+.icon
+{
+  line-height: 16px;
+  display: inline-block;
+}
+.icon2
+{
+  line-height: 20px;
+  font-size: 14px;
+  float: left;
+  margin-right: 5px;
+}
+.ssitem
+{
+  position: fixed;
+  top:0%;
+  left: 0%;
+  width: 100%;
+  z-index: 105;
+}
+
+.ssimg
+{
+  float: left;
+  width: 28px !important;
+  height: 27px !important;
+  margin-left: 28%;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  margin-top: 20px;
+  border: 1px solid#fff;
+  border-right: unset;
+}
+.ssinput
+{
+  float: left;
+  height: 27px;
+  line-height: 27px;
+  border:1px solid#fff;
+  border-left: unset;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  font-size: 13px;
+  color: #fff;
+  margin-top: 20px;
+  padding-left:5px;
+}
+.goback
+{
+  width: 100%;
+  text-align: center;
+  color: #2ca879;
+  line-height: 30px;
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+}
+.nocontentimgview
+{
+  position: fixed;
+  top: 2%;
+  width: 100%;
+  text-align: center;
+}
+.nocontentimg
+{
+  width: 60%;
+  height: 40vh;
+}
+.nocontenttext
+{
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  margin-top: 0%;
+  font-size: 18px;
+  font-style: italic;
+}

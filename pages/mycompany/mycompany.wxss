@@ -1,0 +1,209 @@
+/* pages/mycompany/mycompany.wxss */
+@import "../../iconfont.wxss";
+page
+{
+  overflow: hidden;
+}
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}
+.MainContain
+{
+   width: calc(100% - 26px);
+   height: 19vh;
+   background: rgb(0, 34, 40);
+   color: #fff;
+   padding: 2vh 8px 2vh 18px;
+   font-size: 15px;
+   position: relative;
+}
+.icon1
+{
+  position: absolute;
+  top:10%;
+  right: 6%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  text-align: center;
+}
+.iconfont
+{
+  font-size: 20px;
+}
+.companyitem
+{
+  line-height: 4vh;
+  margin: 0px 0px 1vh 0px;
+}
+.floatmain
+{
+  float: left;
+  width: 100%;
+  height: calc(84vh - 51px);
+  border-top: 1px solid#ddd;
+  margin-top: 20px;
+  overflow: scroll;
+}
+.floatleftitem
+{
+  float: left;
+  width: 25%;
+  height: 100%;
+  background: rgb(54, 66, 74);
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  position: relative;
+}
+.floatitem1
+{
+  width: calc(100% - 8px);
+  padding: 0 4px 4px;
+  border-bottom: 1px solid#fff;
+  height: 35px;
+  line-height: 40px;
+}
+.floatitem2
+{
+  width: calc(100% - 8px);
+  padding: 0 4px 4px;
+  border-bottom: 1px solid#fff;
+  background: #2ca879;
+  height: 35px;
+  line-height: 40px;
+}
+.floatrightitem
+{
+  float: left;
+  width: 75%;
+  height: calc(100% - 10px);
+  overflow-y: scroll;
+}
+.itemlist
+{
+  width: calc(100% - 8px);
+  float: left;
+  padding: 8px 4px;
+  border-bottom: 1px solid#ddd;
+  box-shadow: 0px 2px 10px rgba(15, 117, 124, 0.486);
+}
+.itemlist1
+{
+  width: calc(100% - 8px);
+  float: left;
+  padding: 8px 4px;
+  border-bottom: 1px solid#ddd;
+}
+.nickname1
+{
+  height: 8vh;
+  line-height: 8vh;
+  font-size: 13px;
+  float: left;
+}
+.agree
+{
+  float:right;
+  width:12vw;
+  text-align:center;
+}
+.requestnickname
+{
+  float:left;
+  width:31vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.nickname
+{
+  width: 56vw;
+  height: 8vh;
+  line-height: 4vh;
+  font-size: 13px;
+  float: left;
+}
+.avatar
+{
+  float: left;
+  width: 12vw;
+  height: 8vh;
+  border-radius: 50%;
+  margin-right: 4vw;
+}
+.displayshow
+{
+  display: block;
+}
+.displaynone
+{
+  display: none;
+}
+.modifylx
+{
+  font-size: 12px;
+  padding: 0px 4px;
+  background: #f30;
+  color: #fff;
+  float: right;
+  border-radius: 4px;
+}
+.mask
+{
+  position: fixed;
+  top:0%;
+  height: 100vh;
+  width: 100%;
+  background: #000;
+  opacity: 0.7;
+  z-index: 100;
+}
+.dhitem
+{
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  z-index: 101;
+}
+.dhinput
+{
+  border-bottom: 1px solid#fff;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+  margin-left:20%;
+  margin-right:20%;
+}
+.dhbutton
+{
+  width: 40%;
+  margin: 0 auto;
+  margin-top: 80px;
+  background: #2ca879;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+.tuichu
+{
+  color: #2ca879;
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  font-style: italic;
+}
+.latertext
+{
+  margin-left: 20px;
+}

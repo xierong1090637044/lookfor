@@ -1,0 +1,140 @@
+@import "../../iconfont.wxss";
+.text
+{
+  width: 100%;
+  position: absolute;
+  top: 3%;
+  left: 1%;
+  text-align: center;
+}
+.infor
+{
+  position: absolute;
+  text-align: center;
+}
+.avatar
+{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ffff99;
+  box-shadow: -1px 0px 25px #ffff99;
+  display: inline-block;
+}
+.name
+{
+  color: #ffff99;
+  font-size: 15px;
+  width: 130px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  margin-left: 10px;
+}
+.button
+{
+  position: absolute;
+  right: 12%;
+  top: 5%;
+}
+
+.button1
+{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #ffff99;
+  box-shadow: -1px 0px 25px #ffff99;
+  padding: unset;
+  line-height: 58px;
+}
+
+.textimg
+{
+  width: 50%;
+  height: 10vh;
+}
+.avatarandtext
+{
+  position: absolute;
+  top:5%;
+  left: 5%;
+  width: 90%;
+  text-align: center;
+}
+.promisepeople
+{
+  width:39%;
+  height:32px
+}
+.itemdisplay1
+{
+
+  color: #fff;
+  height: 37px;
+  line-height: 37px;
+  float: left;
+  width:35%;
+  text-align: right;
+  font-size:17px;
+}
+.itemdisplay2
+{
+  height: 37px;
+  float: right;
+  line-height: 37px;
+}
+
+.bgimg
+{
+  width:70%;
+  height:70vh;
+  margin:2% 0 0 15%;
+}
+.text1style
+{
+  width:50%;
+  height:37px;
+  position:absolute;
+  bottom:10%;
+  left:20%;
+}
+.itemstyle
+{
+  width:calc(100% - 10px);
+  padding:10px 5px 10px 5px;
+  background: rgb(0, 34, 40);
+  border-radius: 4px;
+  margin: 10px 0% 10px 0%;
+}
+.substyle
+{
+  width: calc(25% - 23px);
+  text-align: center;
+  padding: 8px 4px 8px 4px;
+  border: 1px solid#fff;
+  border-radius: 4px;
+  display: inline-block;
+  margin:0px 0px 10px 10px;
+}
+.qiandaotext
+{
+  color: #fff;
+  font-size: 13px;
+  margin-top: 5px;
+}
+.person1
+{
+  width: 30%;
+  height: 20vh;
+  margin-top: 15vh;
+  float: left;
+}
+.person2
+{
+  height: 35vh;
+  width: 50%;
+  float: right;
+}

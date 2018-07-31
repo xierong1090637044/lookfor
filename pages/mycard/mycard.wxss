@@ -1,0 +1,104 @@
+/* pages/mycard/mycard.wxss */
+@import "../../iconfont.wxss";
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}
+.allcontent
+{
+  height:95vh;
+  padding-top:5vh;
+  background:#484a4a;
+}
+.backgroundimg
+{
+  padding: 4px 8px;
+  width: calc(100% - 16px);
+  position: relative;
+}
+.mycardbj
+{
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px #f5ebd6;
+}
+.content
+{
+  position: absolute;
+  right: 7%;
+  top:6%;
+  z-index: 100;
+  text-align: left;
+  max-width: 70vw;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.avatar
+{
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  border:1px solid#fff;
+  float: right;
+  margin: 1vh 0 0 0;
+}
+.zhiweitext
+{
+  font-style: italic;
+  font-size: 15px;
+  margin: 0px 1vh 0 0.5vh;
+}
+.cardname
+{
+  font-size: 20px;
+  font-weight: bold;
+}
+.icon
+{
+  font-size: 2.8vh;
+  color: #fff;
+}
+.icon1
+{
+  width: 4vh;
+  height: 4vh;
+  line-height: 4vh;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  margin-left: 14vw;
+  margin-right: 1vw;
+}
+.companyname
+{
+  font-weight: bold;
+  font-size: 20px;
+  margin: 11vh 0 2vh 14vw;
+  overflow: scroll;
+  width: 50vw;
+}
+.common
+{
+  display: inline-block;
+  font-size: 15px;
+  line-height: 2.5vh;
+  width: 50vw;
+  overflow: scroll;
+}
+.noticetext
+{
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  line-height: 30px;
+  font-size: 15px;
+  margin-top: 50%;
+}
+.avatarview
+{
+  display: inline-block;
+  line-height: 8vh;
+}
