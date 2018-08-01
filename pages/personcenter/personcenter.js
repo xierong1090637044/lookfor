@@ -14,6 +14,7 @@ Page({
     userid:'',
     person1: '',
     person2: '',
+    qiandao:'',
   },
   onLoad: function () {
     var that = this;
@@ -36,39 +37,14 @@ Page({
       }).start(true)
     };
 
+    that.modifyqiandao();
+    that.modifybycode();
+
+    //根据月数动态改变签到数据以及当日签到
+    var userid = wx.getStorageSync('user_id');
     var date = new Date();
     var nowtime = date.getDate();
-    var nowmonth = '0'+(date.getMonth()+1);
-    console.log(nowmonth);
-    var userid = wx.getStorageSync('user_id');
-
-    var Diary = Bmob.Object.extend("member");
-    var query = new Bmob.Query(Diary);
-    query.equalTo("parent", userid);
-    // 查询所有数据
-    query.find({
-      success: function (results) {
-        if(results.length ==0){}else{
-          var update = results[0].updatedAt;
-          var arr =[];
-          var arr1 =[];
-          arr = update.split(' ');
-          arr1 = arr[0].split('-');
-          if (arr1[2] < nowtime){
-            var Diary = Bmob.Object.extend("member");
-            var query = new Bmob.Query(Diary);
-            query.get(results[0].id, {
-              success: function (result) {
-                result.set('today', false);
-                result.save();
-              },
-            });
-          }
-        }
-      },
-    });
-
-    //根据月数动态改变签到数据
+    var nowmonth = '0' + (date.getMonth() + 1);
     var Diary1 = Bmob.Object.extend("qiandao");
     var query = new Bmob.Query(Diary1);
     query.equalTo("parent", userid);
@@ -86,6 +62,8 @@ Page({
             var query = new Bmob.Query(Diary);
             query.get(results[0].id, {
               success: function (result) {
+                that.modifyqiandao(true);
+                that.modifybycode(true);
                 result.set('later', 0);
                 result.set('common', 0);
                 result.save();
@@ -151,6 +129,101 @@ Page({
     this.wxCanvas.clear();
   },
 
+  //根据天数改变签到情况
+  modifyqiandao:function(nextmonth)
+  {
+    var date = new Date();
+    var nowtime = date.getDate();
+    var nowmonth = '0' + (date.getMonth() + 1);
+    console.log(nowmonth);
+    var userid = wx.getStorageSync('user_id');
+
+    var Diary = Bmob.Object.extend("member");
+    var query = new Bmob.Query(Diary);
+    query.equalTo("parent", userid);
+    // 查询所有数据
+    query.find({
+      success: function (results) {
+        if (results.length == 0) { } else {
+          var update = results[0].updatedAt;
+          var arr = [];
+          var arr1 = [];
+          arr = update.split(' ');
+          arr1 = arr[0].split('-');
+          if(nextmonth)
+          {
+            var Diary = Bmob.Object.extend("member");
+            var query = new Bmob.Query(Diary);
+            query.get(results[0].id, {
+              success: function (result) {
+                result.set('today', false);
+                result.save();
+              },
+            });
+          }else{
+            if (arr1[2] < nowtime) {
+              var Diary = Bmob.Object.extend("member");
+              var query = new Bmob.Query(Diary);
+              query.get(results[0].id, {
+                success: function (result) {
+                  result.set('today', false);
+                  result.save();
+                },
+              });
+            }
+          }
+        }
+      },
+    });
+  },
+
+  //根据天数改变二维码签到情况
+  modifybycode: function (nextmonth) {
+    var date = new Date();
+    var nowtime = date.getDate();
+    var nowmonth = '0' + (date.getMonth() + 1);
+    console.log(nowmonth);
+    var userid = wx.getStorageSync('user_id');
+
+    var Diary = Bmob.Object.extend("bycode");
+    var query = new Bmob.Query(Diary);
+    query.equalTo("parent", userid);
+    // 查询所有数据
+    query.find({
+      success: function (results) {
+        if (results.length == 0) { } else {
+          var update = results[0].updatedAt;
+          var arr = [];
+          var arr1 = [];
+          arr = update.split(' ');
+          arr1 = arr[0].split('-');
+          if (nextmonth) {
+            var Diary = Bmob.Object.extend("bycode");
+            var query = new Bmob.Query(Diary);
+            query.get(results[0].id, {
+              success: function (result) {
+                result.set('today', false);
+                result.save();
+              },
+            });
+          } else {
+            if (arr1[2] < nowtime) {
+              var Diary = Bmob.Object.extend("bycode");
+              var query = new Bmob.Query(Diary);
+              query.get(results[0].id, {
+                success: function (result) {
+                  result.set('today', false);
+                  result.save();
+                },
+              });
+            }
+          }
+        }
+      },
+    });
+  },
+
+  //公司按钮点击
   gotocompany:function()
   {
     var that = this;
@@ -539,10 +612,143 @@ Page({
 
   scancode:function()
   {
-    wx.scanCode({
-      success: (res) => {
-        console.log(res.result)
-      }
+    var that = this;
+    var userid = wx.getStorageSync('user_id');
+    if (userid = null || userid == "") {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      var userid = wx.getStorageSync('user_id');
+      var Diary = Bmob.Object.extend("member");
+      var query = new Bmob.Query(Diary);
+      query.equalTo("parent", userid);
+      // 查询所有数据
+      query.find({
+        success: function (results) {
+          if (results.length == 0) {
+            wx.showToast({
+              title: '请先加入公司',
+              icon: 'none',
+              duration: 2000
+            });
+          } else {
+            var companyid = results[0].get("parent_com").id;
+
+            var Diary = Bmob.Object.extend("bycode");
+            var query = new Bmob.Query(Diary);
+            query.equalTo("parent", userid);
+            // 查询所有数据
+            query.find({
+              success: function (results) {
+                console.log("共查询到 " + results.length + " 条记录");
+                if(results.length == 0)
+                {
+                  var Diary = Bmob.Object.extend("qiandaoma");
+                  var query = new Bmob.Query(Diary);
+                  query.equalTo("parent_com", companyid);
+                  // 查询所有数据
+                  query.find({
+                    success: function (results) {
+                      var object = results[0];
+                      var usetime = object.get('codedata');
+                      console.log(usetime);
+                      wx.scanCode({
+                        success: (res) => {
+                          console.log(res.result)
+                          if (usetime == res.result) {
+                            var Diary = Bmob.Object.extend("bycode");
+                            var User = Bmob.Object.extend("user_infor");
+                            var Company = Bmob.Object.extend("company");
+                            var diary = new Diary();
+                            var user = new User();
+                            var company = new Company();
+                            user.id = userid;
+                            company.id = companyid;
+                            diary.set("qiandao", 1);
+                            diary.set("today", true);
+                            diary.set('parent', user);
+                            diary.set('parent_com', company);
+                            diary.save(null, {
+                              success: function (result) {
+                                that.showtoast('二维码签到成功');
+                              },
+                            });
+                          } else {
+                            wx.showToast({
+                              title: '二维码已过期',
+                              icon: 'none',
+                              duration: 2000
+                            });
+                          }
+                        }
+                      });
+                    },
+                  });
+                }else{
+                  var object = results[0];
+                  var id = object.id;
+                  var today = object.get('today');
+                  var qiandao = object.get('qiandao');
+                  that.setData({qiandao:qiandao});
+                  if(today)
+                  {
+                    that.showtoast('今日已扫码签到');
+                  }else{
+                    var Diary = Bmob.Object.extend("qiandaoma");
+                    var query = new Bmob.Query(Diary);
+                    query.equalTo("parent_com", companyid);
+                    // 查询所有数据
+                    query.find({
+                      success: function (results) {
+                        var object = results[0];
+                        var usetime = object.get('codedata');
+                        console.log(usetime);
+                        wx.scanCode({
+                          success: (res) => {
+                            console.log(res.result)
+                            if (usetime == res.result) {
+                              var Diary = Bmob.Object.extend("bycode");
+                              var query = new Bmob.Query(Diary);
+                              query.get(id, {
+                                success: function (result) {
+                                  result.set('qiandao', that.data.qiandao+1);
+                                  result.set('today',true);
+                                  result.save();
+                                  that.showtoast('二维码签到成功');
+                                },
+                              });
+                            } else {
+                              wx.showToast({
+                                title: '二维码已过期',
+                                icon: 'none',
+                                duration: 2000
+                              });
+                            }
+                          }
+                        });
+                      },
+                    });
+                  }
+                }
+              }
+            });
+          }
+        },
+      })
+    }
+   
+  },
+
+  showtoast:function(text)
+  {
+    wx.showToast({
+      title: text,
+      icon:'none',
+      duration:2000
     })
   },
+
 })

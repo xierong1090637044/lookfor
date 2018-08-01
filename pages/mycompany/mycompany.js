@@ -11,13 +11,18 @@ Page({
     dataid:'',
     qiandao:"",
     allqiandao:'',
-    noqiandao:'none',
-    haveqiandao:'none',
-    userid:'',
-    modifydisplay:'none',
+    userid:'', 
     lxid:'',
     inputValue:'',
     memberallqd:'',
+    codeurl: '',
+    codeqd:'',
+    codeqdgr: '',
+    modifydisplay: 'none',
+    noqiandao: 'none',
+    haveqiandao: 'none',
+    qiandaomadis:'none',
+    codedis:'none',
   },
 
   /*** 生命周期函数--监听页面加载*/
@@ -45,6 +50,7 @@ Page({
               that.getrequest(companid);
               that.getallqiandao(companid);
               that.getqiandao();
+              that.getqdmbyid(companid);
               that.setData({
                 company: object.get('parent_com'),
                 master: result,
@@ -68,7 +74,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this;
+    
   },
 
   /**
@@ -176,6 +183,17 @@ Page({
             allqiandao: all,
             noqiandao: 'none',
             haveqiandao: 'block',
+          });
+          var Diary = Bmob.Object.extend("bycode");
+          var query = new Bmob.Query(Diary);
+          query.equalTo("parent", userid);
+          // 查询所有数据
+          query.find({
+            success: function (results) {
+              console.log("共查询到 " + results.length + " 条记录");
+              var qiandao = results[0].get('qiandao');
+              that.setData({codeqdgr:qiandao});
+            },
           });
         }
       },
@@ -454,9 +472,275 @@ Page({
         console.log(results);
         that.setData({
           memberallqd: results
-        })
+        });
+
+        var Diary = Bmob.Object.extend("bycode");
+        var query = new Bmob.Query(Diary);
+        query.equalTo("parent_com", id);
+        query.include("parent");
+        // 查询所有数据
+        query.find({
+          success: function (results) {
+            console.log("扫码签到 " + results.length + " 条记录");
+            that.setData({
+              codeqd: results
+            });
+          },
+        });
       },
     });
-  }
+  },
+
+  //得到签到码  ”生成“点击
+  getcodeimg:function()
+  {
+    var that = this;
+    var date = new Date();
+    var nowtime = date.getDate();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    var userid = wx.getStorageSync('user_id');
+    var companyid = that.data.company.objectId;
+    var master = that.data.master.get('parent').objectId;
+
+    if(master == userid)
+    {
+      wx.showModal({
+        title: '提示',
+        content: '是否生成签到二维码',
+        success: function (res) {
+          if (res.confirm) {
+            wx.request({
+              url: 'https://route.showapi.com/887-1',
+              data: {
+                showapi_appid: '66939',
+                showapi_sign: '8741e2d8bba64bed81f7a27dacd63189',
+                content: companyid + '-' + nowtime + h + m + s,
+              },
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              success: function (res) {
+                var img = res.data.showapi_res_body.imgUrl;
+                wx.setStorageSync('codeimg', img);
+
+                var Diary = Bmob.Object.extend("qiandaoma");
+                var User = Bmob.Object.extend("user_infor");
+                var Company = Bmob.Object.extend("company");
+                var diary = new Diary();
+                var user = new User();
+                var company = new Company();
+                user.id = userid;
+                company.id = companyid;
+                diary.set("codeurl", img);
+                diary.set('codedata', companyid + '-' + nowtime + h + m + s);
+                diary.set('parent', user);
+                diary.set('parent_com', company);
+                diary.save(null, {
+                  success: function (result) {
+                    wx.showToast({
+                      title: '生成成功',
+                      icon: 'none',
+                      duration: 2000,
+                    });
+                    that.getqdmbyid(companyid);
+                  },
+                });
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'none',
+        duration: 2000,
+      });
+    } 
+  },
+
+  //根据公司id 查询签到码
+  getqdmbyid:function(id)
+  {
+    var that = this;
+    var Diary = Bmob.Object.extend("qiandaoma");
+    var query = new Bmob.Query(Diary);
+    query.equalTo("parent_com", id);
+    // 查询所有数据
+    query.find({
+      success: function (results) {
+        if(results.length == 0)
+        {
+          that.setData({
+            qiandaomadis:'block',
+            codedis: 'none',
+          })
+        }else{
+          var object = results[0];
+          console.log('签到码:' + object.id + ' - ' + object.get('codeurl'));
+          wx.setStorageSync('qdmid', object.id);
+          that.setData({
+            codeurl: object.get('codeurl'),
+            codedis:'block',
+            qiandaomadis: 'none'
+          })
+        }
+      },
+    });
+  },
+
+  //重新生成点击
+  getagain:function()
+  {
+    var that = this;
+    var date = new Date();
+    var userid = wx.getStorageSync('user_id');
+    var master = that.data.master.get('parent').objectId;
+    console.log(master);
+    var nowtime = date.getDate();
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var s = date.getSeconds();
+    var companyid = that.data.company.objectId;
+    var qdmid = wx.getStorageSync('qdmid');
+
+    if(master == userid)
+    {
+      wx.showModal({
+        title: '注意',
+        content: '重新生成，以前的二维码将过期，请注意！',
+        success: function (res) {
+          if (res.confirm) {
+            wx.request({
+              url: 'https://route.showapi.com/887-1',
+              data: {
+                showapi_appid: '66939',
+                showapi_sign: '8741e2d8bba64bed81f7a27dacd63189',
+                content: companyid + '-' + nowtime + h + m + s,
+              },
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              success: function (res) {
+                var img = res.data.showapi_res_body.imgUrl;
+                wx.setStorageSync('codeimg', img);
+
+                var Diary = Bmob.Object.extend("qiandaoma");
+                var query = new Bmob.Query(Diary);
+                query.get(qdmid, {
+                  success: function (result) {
+                    result.set('codeurl', img);
+                    result.set('codedata', companyid + '-' + nowtime + h + m + s);
+                    result.save();
+                    wx.showToast({
+                      title: '重新生成成功',
+                      icon: 'none',
+                      duration: 2000,
+                    });
+                    that.getqdmbyid(companyid);
+                  },
+                });
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '您没有权限',
+        icon:'none',
+        duration:2000,
+      });
+    }
+  },
+
+  getagain1:function()
+  {
+    var that = this;
+    var date = new Date();
+    var userid = wx.getStorageSync('user_id');
+    var master = that.data.master.get('parent').objectId;
+    var companyid = that.data.company.objectId;
+    var qdmid = wx.getStorageSync('qdmid');
+
+    if (master == userid) {
+      wx.showModal({
+        title: '注意',
+        content: '是否再次生成签到二维码！',
+        success: function (res) {
+          if (res.confirm) {
+            var Diary = Bmob.Object.extend("qiandaoma");
+            var query = new Bmob.Query(Diary);
+            query.equalTo("parent_com", companyid);
+            query.find({
+              success: function (results) {
+                var arr = [];
+                var object = results[0];
+                var time = object.get('codedata');
+                arr = time.split('-');
+                wx.request({
+                  url: 'https://route.showapi.com/887-1',
+                  data: {
+                    showapi_appid: '66939',
+                    showapi_sign: '8741e2d8bba64bed81f7a27dacd63189',
+                    content: companyid+'-'+arr[1],
+                  },
+                  header: {
+                    'content-type': 'application/json' // 默认值
+                  },
+                  success: function (res) {
+                    var img = res.data.showapi_res_body.imgUrl;
+                    wx.setStorageSync('codeimg', img);
+                    var Diary = Bmob.Object.extend("qiandaoma");
+                    var query = new Bmob.Query(Diary);
+                    query.get(qdmid, {
+                      success: function (result) {
+                        result.set('codeurl', img);
+                        result.save();
+                        wx.showToast({
+                          title: '再次生成成功',
+                          icon: 'none',
+                          duration: 2000,
+                        });
+                        that.getqdmbyid(companyid);
+                      },
+                    });
+                  }
+                })
+              },
+            });
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '您没有权限',
+        icon: 'none',
+        duration: 2000,
+      });
+    }
+  },
+
+  //长按签到码
+  savecode:function()
+  {
+    var codeimg = wx.getStorageSync('codeimg')
+    wx.setClipboardData({
+      data: codeimg,
+      success: function (res) {
+        wx.getClipboardData({
+          
+        })
+      }
+    })
+  },
 
 })
