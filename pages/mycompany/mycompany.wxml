@@ -16,7 +16,10 @@
     <text>创建时间：</text>
     <text>{{company.createdAt}}</text>
   </view>
-  <view class='icon1'><i class="icon iconfont icon-gongsi"></i> </view>
+  <view class='icon1' wx:if='{{company.companyicon ==""}}'>
+     <i class="icon iconfont icon-gongsi" bindtap='uploadimg'></i> 
+  </view>
+  <image wx:else src='{{company.companyicon}}' class='icon11'bindtap='uploadimg'></image>
 </view>
 
 <view class='floatmain'>

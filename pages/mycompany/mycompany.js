@@ -743,4 +743,68 @@ Page({
     })
   },
 
+  //上传公司头像
+  uploadimg:function()
+  {
+    var that = this;
+    var userid = wx.getStorageSync('user_id');
+    var master = that.data.master.get('parent').objectId;
+    var companyid = that.data.master.id;
+    if(master == userid){
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          var tempFilePaths = res.tempFilePaths;
+          if (tempFilePaths.length > 0) {
+            var name = that.data.master.get('company')+".jpg";
+            var file = new Bmob.File(name, tempFilePaths);
+            file.save().then(function (res) {
+              console.log(res.url());
+              var url = res.url();
+              var Diary = Bmob.Object.extend("company");
+              var query = new Bmob.Query(Diary);
+              query.get(companyid, {
+                success: function (result) {
+                  result.set('companyicon', url);
+                  result.save(null,{
+                    success: function(result){
+                      var userid = wx.getStorageSync('user_id');
+
+                      var Diary = Bmob.Object.extend("member");
+                      var query = new Bmob.Query(Diary);
+                      query.include('parent_com');
+                      query.equalTo("parent", userid);
+                      // 查询所有数据
+                      query.find({
+                        success: function (results) {
+                          var object = results[0];
+                          var companid = object.get('parent_com').objectId;
+                          var Diary = Bmob.Object.extend("company");
+                          var query = new Bmob.Query(Diary);
+                          query.include('parent');
+                          query.get(companid, {
+                            success: function (result) {
+                              that.setData({
+                                company: object.get('parent_com'),
+                                master: result,
+                                dataid: '公司成员',
+                                userid: userid,
+                              });
+                            },
+                          });
+                        },
+                      });
+                    }
+                  });
+                },
+              });
+            })
+          }
+        }
+      })
+    }else{}
+  },
+
 })

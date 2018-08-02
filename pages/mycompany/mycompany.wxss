@@ -31,6 +31,16 @@ color: transparent;
   color: #2ca879;
   text-align: center;
 }
+.icon11
+{
+  position: absolute;
+  top:10%;
+  right: 6%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border:1px solid#fff;
+}
 .iconfont
 {
   font-size: 20px;

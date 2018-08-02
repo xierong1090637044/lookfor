@@ -181,7 +181,6 @@ Page({
       // 查询所有数据
       query.find({
         success: function (results) {
-          console.log("共查询到 " + results.length + " 条记录");
           if (results.length==0)
           {
             var Diary = Bmob.Object.extend("company");
@@ -193,6 +192,7 @@ Page({
             diary.set("longitude", longitude);
             diary.set("worktime",worktime);
             diary.set("leavetime", leavetime);
+            diary.set("companyicon",'');
             var post = new Post();
             post.id = id;
             diary.set("parent", post);
