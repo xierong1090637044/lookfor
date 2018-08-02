@@ -16,7 +16,7 @@
     <text>创建时间：</text>
     <text>{{company.createdAt}}</text>
   </view>
-  <view class='icon1'><i class="icon iconfont icon-lvyou1"></i> </view>
+  <view class='icon1'><i class="icon iconfont icon-gongsi"></i> </view>
 </view>
 
 <view class='floatmain'>
@@ -68,6 +68,13 @@
 
     <!--签到码考勤列表-->
   <view class="floatrightitem {{dataid == '签到码出勤' ? 'displayshow' : 'displaynone'}}">
+  <view wx:if="{{codeqd==''}}" style='text-align:center'>
+    <view class='icon2' style='margin-top:10%;color:#2ca879;font-size:30px;'>
+      <i class="iconsm iconfont icon-common-bukaixin-copy"></i> 
+    </view>
+    <view style='font-size:15px;margin-top:5%'>去使用二维码签到吧</view>
+  </view>
+  <view wx:else>
      <view wx:for="{{codeqd}}" wx:key="{{index}}" style='float:left;width:100%'>
         <view class='itemlist1'>
           <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
@@ -77,16 +84,27 @@
               </view>
              <view>
                 <view style='line-height12px;'>扫码签到：
-                <text style='color:#00abff'>{{item.qiandao}}</text>
+                   <text style='color:#00abff'>{{item.qiandao}}</text>
+                </view>
+                <view style='line-height12px;'>签到时间：
+                   <text style='color:#00abff'>{{item.updatedAt}}</text>
                 </view>
               </view>
            </view>
         </view>
      </view>
+     </view>
   </view>
 
     <!--申请列表-->
   <view class="floatrightitem {{dataid == '申请列表' ? 'displayshow' : 'displaynone'}}">
+  <view wx:if="{{request==''}}" style='text-align:center'>
+    <view class='icon2' style='margin-top:10%;color:#2ca879;font-size:30px;'>
+      <i class="iconsm iconfont icon-common-bukaixin-copy"></i> 
+    </view>
+    <view style='font-size:15px;margin-top:5%'>赶快通知同事们加入吧！</view>
+  </view>
+  <view wx:else>
      <view wx:for="{{request}}" wx:key="{{index}}" class='itemlist1'>
           <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
           <view class='nickname1'>
@@ -95,6 +113,7 @@
             <view class='agree' bindtap='refuse' style='color:#f30' data-id='{{item.objectId}}'>拒绝</view>
           </view>
      </view>
+  </view>
   </view>
 
   <!--我的出勤-->
@@ -112,16 +131,17 @@
     <view style='font-size:15px;margin-top:20px;line-height:28px;'>
        <view><text>迟到：</text><text style='color:#f30;font-size:18px'>{{qiandao[0].later}}</text></view>
        <view><text>正常：</text><text style='color:#2ca879;font-size:18px'>{{qiandao[0].common}}</text></view>
-       <view><text>扫码签到：</text><text style='color:#00abff;font-size:18px'>{{codeqdgr}}</text></view>
+       <view><text>扫码签到（扫码签到不计入）：</text><text style='color:#00abff;font-size:18px'>{{codeqdgr}}</text></view>
     </view>
    </view>
    <view style='display:{{noqiandao}};font-size:15px;color:#f30;margin-top:40%;'>您还没有进行过签到！</view>
+   <view style='display:{{noqiandao}};font-size:12px;color:#f30;margin-top:2%;'>（扫码签到不计入）</view>
   </view>
 
   <!--签到码-->
   <view class="floatrightitem {{dataid == '签到码' ? 'displayshow' : 'displaynone'}}">
   <view style='display:{{qiandaomadis}}'>
-    <view class='icon2'><i class="icon22 iconfont icon-kulian1"></i> </view>
+    <view class='icon2' style='margin-top:5%'><i class="icon22 iconfont icon-kulian1"></i> </view>
     <view style='text-align:center;font-size:15px;margin-top:15px;'>当前还未生成签到码</view>
     <view wx:if='{{company.parent.objectId == userid}}'style='text-align:center;color:#2ca879;margin-top:20px;' bindtap='getcodeimg'>生成</view>
   </view>

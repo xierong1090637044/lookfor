@@ -74,7 +74,6 @@
 .bottomimg
 {
   position: fixed;
-  bottom: 0%;
-  width: calc(100% - 20px);
-  padding: 10px
+  bottom: -1%;
+  width: 100%;
 }

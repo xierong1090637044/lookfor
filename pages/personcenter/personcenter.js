@@ -77,7 +77,6 @@ Page({
     //查询获得用户的objectid
     var id = wx.getStorageSync('openid');
     var user = wx.getStorageSync('user_info');
-    console.log(user.nickName);
     if (id == '' || id == null) {
       query.equalTo("nickName", user.nickName);
       query.find({
@@ -103,9 +102,7 @@ Page({
       query.equalTo("openid", id);
       query.find({
         success: function (results) {
-          console.log("共查询到 " + results.length + " 条记录");
           var object = results[0];
-          console.log(object)
           wx.setStorageSync('user_info', object)
           var user = wx.getStorageSync('user_info');
           if (object == null || object == '') {
@@ -135,7 +132,6 @@ Page({
     var date = new Date();
     var nowtime = date.getDate();
     var nowmonth = '0' + (date.getMonth() + 1);
-    console.log(nowmonth);
     var userid = wx.getStorageSync('user_id');
 
     var Diary = Bmob.Object.extend("member");
@@ -182,7 +178,6 @@ Page({
     var date = new Date();
     var nowtime = date.getDate();
     var nowmonth = '0' + (date.getMonth() + 1);
-    console.log(nowmonth);
     var userid = wx.getStorageSync('user_id');
 
     var Diary = Bmob.Object.extend("bycode");
@@ -594,7 +589,6 @@ Page({
     query.find({
       success: function (results) {
         var imgurl = results[0].get("imgs").url;
-        console.log(results[0].get("imgs").url);
         if(id == 'person1')
         {
           that.setData({
@@ -605,7 +599,6 @@ Page({
             person2: imgurl
           });
         }
-       
       },
     });
   },
@@ -673,7 +666,11 @@ Page({
                             diary.set('parent_com', company);
                             diary.save(null, {
                               success: function (result) {
-                                that.showtoast('二维码签到成功');
+                                wx.showToast({
+                                  title: '二维码签到成功',
+                                  icon: 'success',
+                                  duration: 2000
+                                })
                               },
                             });
                           } else {
@@ -717,7 +714,11 @@ Page({
                                   result.set('qiandao', that.data.qiandao+1);
                                   result.set('today',true);
                                   result.save();
-                                  that.showtoast('二维码签到成功');
+                                  wx.showToast({
+                                    title: '二维码签到成功',
+                                    icon: 'success',
+                                    duration: 2000
+                                  })
                                 },
                               });
                             } else {
@@ -739,7 +740,13 @@ Page({
         },
       })
     }
-   
+  },
+
+  aboutus:function()
+  {
+    wx.navigateTo({
+      url: '../about_us/about_us'
+    });
   },
 
   showtoast:function(text)

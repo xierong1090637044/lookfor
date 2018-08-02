@@ -1,12 +1,12 @@
 {
   "pages": [
-   
     "pages/personcenter/personcenter",
     "pages/mingpian/mingpian",
     "pages/mycard/mycard",
     "pages/mycompany/mycompany",
     "pages/company/company",
-    "pages/joincompany/joincompany"
+    "pages/joincompany/joincompany",
+    "pages/about_us/about_us"
   ],
   "window": {
     "enablePullDownRefresh": false
