@@ -27,10 +27,33 @@
      <view data-id='公司成员' class="{{dataid == '公司成员' ? 'floatitem2' : 'floatitem1'}}" bindtap='getdataid'>公司成员</view>
      <view data-id='我的出勤' class="{{dataid == '我的出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>我的出勤</view>
      <view data-id='全部出勤' class="{{dataid == '全部出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>全部出勤</view>
-     <view data-id='签到码' class="{{dataid == '签到码' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码</view>
-     <view data-id='签到码出勤' class="{{dataid == '签到码出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码出勤</view>
+     <view data-id='通知' class="{{dataid == '通知' ? 'floatitem2' : 'floatitem1'}}" bindtap='getdataid'>通知</view>
+     <!--<view data-id='签到码' class="{{dataid == '签到码' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码</view>-->
+     <!--<view data-id='签到码出勤' class="{{dataid == '签到码出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码出勤</view>-->
       <view data-id='申请列表' class="{{dataid == '申请列表' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>申请列表</view>
      <view class='tuichu' bindtap='goout'>退出</view>
+  </view>
+
+  <!--通知-->
+  <view class="floatrightitem {{dataid == '通知' ? 'displayshow' : 'displaynone'}}">
+      <view wx:if="{{company.tongzhi == ''}}">
+        <form bindsubmit="bindFormSubmit">
+           <textarea placeholder="填写你要发布的通知" name="textarea" class='textareatz' placeholder-style='font-size:15px;' maxlength='50'/>
+            <button form-type="submit" class='submitbt'> 发布 </button>
+          </form>
+      </view>
+      <view wx:else>
+          <form bindsubmit="bindFormSubmit" style='display:{{form}}'>
+           <textarea placeholder="填写你要发布的通知" name="textarea" class='textareatz' placeholder-style='font-size:15px;' maxlength='50'/>
+            <button form-type="submit" class='submitbt'> 发布 </button>
+          </form>
+        <view style='display:{{form1}}'>
+          <view class='tzcontent'>通知：</view>
+          <view class='tzcontent1'>{{company.tongzhi}}</view>
+          <view class='tzcontent2'>发布时间：{{company.updatedAt}}</view>
+          <button bindtap='againsubmit' class='submitbt' style='margin-top:30%' bind> 重新发布 </button>
+        </view>
+      </view>
   </view>
 
   <!--公司成员列表-->
@@ -51,6 +74,11 @@
      </view>
   </view>
 
+   <!--查看日历-->
+  <view class="floatrightitem {{dataid == '查看日历' ? 'displayshow' : 'displaynone'}}">
+     <calendar calendar-style="calendar" header-style="header" board-style="board" />
+  </view>
+
   <!--全部考勤列表-->
   <view class="floatrightitem {{dataid == '全部出勤' ? 'displayshow' : 'displaynone'}}">
      <view wx:for="{{memberallqd}}" wx:key="{{index}}" style='float:left;width:100%'>
@@ -63,6 +91,10 @@
              <view>
                 <text>本月签到：<text style='color:#2ca879'>{{item.common}}</text></text>
                 <text class='latertext'>本月迟到：<text style='color:#f30'>{{item.later}}</text></text>
+              </view>
+              <view>
+                <text>本月签退：<text style='color:#2ca879'>{{item.leave_c}}</text></text>
+                <text class='latertext'>本月早退：<text style='color:#f30'>{{item.leave_z}}</text></text>
               </view>
            </view>
         </view>
@@ -86,10 +118,10 @@
                <view style='display:inline-block'>{{item.parent.nickName}}</view>
               </view>
              <view>
-                <view style='line-height12px;'>扫码签到：
+                <view style='line-height:18px;font-size:12px'>扫码签到：
                    <text style='color:#00abff'>{{item.qiandao}}</text>
                 </view>
-                <view style='line-height12px;'>签到时间：
+                <view style='line-height:18px;font-size:12px;'>签到时间：
                    <text style='color:#00abff'>{{item.updatedAt}}</text>
                 </view>
               </view>
@@ -128,17 +160,26 @@
         <view class='requestnickname' style='float:unset !important;width:100% !important'>{{qiandao[0].parent.nickName}}</view>
       </view>
     </view>
-    <view style='font-size:15px;margin-top:20px;'>
-       <text>当月累计签到：</text><text style='color:#f30;font-size:18px'>{{allqiandao}}</text>
+    <view style='font-size:15px;margin-top:20px;font-weight:bold'>
+       <view><text>当月累计签到：</text><text style='color:#f30;font-size:18px'>{{allqiandao}}</text></view>
     </view>
-    <view style='font-size:15px;margin-top:20px;line-height:28px;'>
-       <view><text>迟到：</text><text style='color:#f30;font-size:18px'>{{qiandao[0].later}}</text></view>
-       <view><text>正常：</text><text style='color:#2ca879;font-size:18px'>{{qiandao[0].common}}</text></view>
-       <view><text>扫码签到（扫码签到不计入）：</text><text style='color:#00abff;font-size:18px'>{{codeqdgr}}</text></view>
+    <view style='font-size:15px;margin-top:10px;line-height:28px;font-weight:bold'>
+       <view>
+          <text>迟到：</text><text style='color:#f30;font-size:18px'>{{qiandao[0].later}}</text>
+          <text style='margin-left:20px'>正常：</text><text style='color:#2ca879;font-size:18px'>{{qiandao[0].common}}</text>
+      </view>
     </view>
+       <view style='font-size:15px;margin-top:20px;font-style:italic;font-weight:bold'>
+          <view><text>当月累计签退：</text><text style='color:#f30;font-size:18px'>{{allqiantui}}</text></view>
+       </view>
+        <view style='font-size:15px;margin-top:10px;line-height:28px;font-style:italic;font-weight:bold'>
+          <text>早退：</text><text style='color:#f30;font-size:18px'>{{qiandao[0].leave_z}}</text>
+          <text style='margin-left:20px'>正常：</text><text style='color:#2ca879;font-size:18px'>{{qiandao[0].leave_c}}</text>
+       </view>
+       <!--<view><text>扫码签到（扫码签到不计入）：</text><text style='color:#00abff;font-size:18px'>{{codeqdgr}}</text></view>-->
    </view>
    <view style='display:{{noqiandao}};font-size:15px;color:#f30;margin-top:40%;'>您还没有进行过签到！</view>
-   <view style='display:{{noqiandao}};font-size:12px;color:#f30;margin-top:2%;'>（扫码签到不计入）</view>
+   <!--<view style='display:{{noqiandao}};font-size:12px;color:#f30;margin-top:2%;'>（扫码签到不计入）</view>-->
   </view>
 
   <!--签到码-->

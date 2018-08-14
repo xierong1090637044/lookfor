@@ -6,7 +6,9 @@
     "pages/mycompany/mycompany",
     "pages/company/company",
     "pages/joincompany/joincompany",
-    "pages/about_us/about_us"
+    "pages/about_us/about_us",
+    "pages/weather/weather",
+    "pages/myactivity/myactivity"
   ],
   "window": {
     "enablePullDownRefresh": false
@@ -36,6 +38,12 @@
     "connectSocket": 10000,
     "uploadFile": 10000,
     "downloadFile": 10000
+  },
+  "plugins": {
+    "myPlugin": {
+      "version": "1.0.3",
+      "provider": "wx60d306fd175fe556"
+    }
   },
   "debug": false
 }

@@ -5193,6 +5193,23 @@
                     success: function () {
                         //session 未过期，并且在本生命周期一直有效
                         console.log('登陆中')
+                      wx.login({
+                        success: function (res) {
+
+                          that.loginWithWeapp(res.code).then(
+                            function (user) {
+
+                              var openid = user.get('authData').weapp.openid
+                              wx.setStorageSync('openid', openid)
+                              //保存用户其他信息到用户表
+                              promise.resolve(user);
+                            },
+                            function (err) {
+                              promise.reject(err);
+                            }
+                          )
+                        }
+                      })
                     },
                     fail: function () {
                         wx.login({

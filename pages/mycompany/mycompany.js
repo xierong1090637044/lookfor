@@ -11,6 +11,7 @@ Page({
     dataid:'',
     qiandao:"",
     allqiandao:'',
+    allqiantui:'',
     userid:'', 
     lxid:'',
     inputValue:'',
@@ -18,6 +19,8 @@ Page({
     codeurl: '',
     codeqd:'',
     codeqdgr: '',
+    form:'none',
+    form1: '',
     modifydisplay: 'none',
     noqiandao: 'none',
     haveqiandao: 'none',
@@ -141,6 +144,9 @@ Page({
   /**得到公司用户成员 */
   getmembers:function(id)
   {
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this;
     var Diary = Bmob.Object.extend("member");
     var query = new Bmob.Query(Diary);
@@ -149,7 +155,7 @@ Page({
     // 查询所有数据
     query.find({
       success: function (results) {
-        console.log('公司用户成员'+results);
+        wx.hideLoading();
         that.setData({
           members:results
         });
@@ -177,24 +183,27 @@ Page({
         }else{
           var later = results[0].get('later');
           var commo = results[0].get('common');
+          var later_z = results[0].get('leave_z');
+          var commo_c = results[0].get('leave_c');
           var all = later + commo;
+          var allqt = later_z + commo_c;
           that.setData({
             qiandao: results,
             allqiandao: all,
+            allqiantui: allqt,
             noqiandao: 'none',
             haveqiandao: 'block',
           });
-          var Diary = Bmob.Object.extend("bycode");
+          /*var Diary = Bmob.Object.extend("bycode");
           var query = new Bmob.Query(Diary);
           query.equalTo("parent", userid);
           // 查询所有数据
           query.find({
             success: function (results) {
-              console.log("共查询到 " + results.length + " 条记录");
               var qiandao = results[0].get('qiandao');
               that.setData({codeqdgr:qiandao});
             },
-          });
+          });*/
         }
       },
     });
@@ -238,6 +247,8 @@ Page({
         company.id = companyid;
         diary.set("parent", user);
         diary.set("parent_com", company);
+        diary.set("today", false);
+        diary.set("todayqt", false);
         if(dataname =='member')
         {
           diary.set("phone", '未添加');
@@ -290,6 +301,10 @@ Page({
     var that = this;
     var id = that.data.lxid;
     var value = that.data.inputValue;
+    var companyid = that.data.company.objectId;
+    wx.showLoading({
+      title: '修改中',
+    });
     if(value.length<11)
     {
       wx.showToast({
@@ -304,13 +319,14 @@ Page({
         success: function (result) {
           result.set('phone', value);
           result.save();
+          wx.hideLoading();
           wx.showToast({
             title: '修改成功',
             icon:'none',
             duration:1000
           });
           setTimeout(function(){
-            that.getmembers();
+            that.getmembers(companyid);
             that.setData({
               modifydisplay: 'none'
             })
@@ -380,6 +396,9 @@ Page({
 
   deletebyid:function(id)
   {
+    wx.showLoading({
+      title: '正在退出',
+    });
     var userid = wx.getStorageSync('user_id');
     var Diary = Bmob.Object.extend("member");
     var query = new Bmob.Query(Diary);
@@ -393,6 +412,13 @@ Page({
             query.find().then(function (todos) {
               return Bmob.Object.destroyAll(todos);
             }).then(function (todos) {
+
+              var query = new Bmob.Query('bycode');
+              query.equalTo("parent", userid);
+              query.find().then(function (todos) {
+                return Bmob.Object.destroyAll(todos);
+              }).then(function (todos) {
+              wx.hideLoading();
               wx.switchTab({
                 url: '../personcenter/personcenter',
               });
@@ -403,6 +429,7 @@ Page({
                   duration: 1000,
                 })
               }, 1000);
+              });
             });
           },
         });
@@ -413,6 +440,9 @@ Page({
   //解散当前公司，单次请求50
   deleteallbyid:function(id)
   {
+    wx.showLoading({
+      title: '正在退出',
+    });
     var userid = wx.getStorageSync('user_id');
     var Diary = Bmob.Object.extend("member");
     var query = new Bmob.Query(Diary);
@@ -440,16 +470,30 @@ Page({
               query.find().then(function (todos) {
                 return Bmob.Object.destroyAll(todos);
               }).then(function (todos) {
-                wx.switchTab({
-                  url: '../personcenter/personcenter',
+
+                var query = new Bmob.Query('qiandaoma');
+                query.equalTo("parent_com", id);
+                query.find().then(function (todos) {
+                  return Bmob.Object.destroyAll(todos);
+                }).then(function (todos) {
+                  var query = new Bmob.Query('bycode');
+                  query.equalTo("parent_com", id);
+                  query.find().then(function (todos) {
+                    return Bmob.Object.destroyAll(todos);
+                  }).then(function (todos) {
+                    wx.hideLoading();
+                    wx.switchTab({
+                      url: '../personcenter/personcenter',
+                    });
+                    setTimeout(function () {
+                      wx.showToast({
+                        title: '您已解散该公司',
+                        icon: 'none',
+                        duration: 1000,
+                      })
+                    }, 1000)
+                  });
                 });
-                setTimeout(function () {
-                  wx.showToast({
-                    title: '您已解散该公司',
-                    icon: 'none',
-                    duration: 1000,
-                  })
-                }, 1000)
               });
             });
           });
@@ -753,8 +797,8 @@ Page({
     if(master == userid){
       wx.chooseImage({
         count: 1, // 默认9
-        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        sizeType: ['compressed'], 
+        sourceType: ['album', 'camera'],
         success: function (res) {
           var tempFilePaths = res.tempFilePaths;
           if (tempFilePaths.length > 0) {
@@ -805,6 +849,91 @@ Page({
         }
       })
     }else{}
+  },
+
+  //发布通知
+  bindFormSubmit: function(e) {
+    var that = this;
+    var userid = wx.getStorageSync('user_id');
+    var master = that.data.master.get('parent').objectId;
+    var companyid = that.data.master.id;
+    var content = e.detail.value.textarea;
+    if (master == userid) {
+      if(content ==""||content.length<10)
+      {
+        wx.showToast({
+          title: '内容不能少于10个字',
+          icon:'none'
+        });
+      }else
+      {
+        var Diary = Bmob.Object.extend("company");
+        var query = new Bmob.Query(Diary);
+        query.get(companyid, {
+          success: function (result) {
+            result.set('tongzhi', content);
+            result.save(null, {
+              success: function (result) {
+                var userid = wx.getStorageSync('user_id');
+
+                var Diary = Bmob.Object.extend("member");
+                var query = new Bmob.Query(Diary);
+                query.include('parent_com');
+                query.equalTo("parent", userid);
+                // 查询所有数据
+                query.find({
+                  success: function (results) {
+                    var object = results[0];
+                    var companid = object.get('parent_com').objectId;
+                    var Diary = Bmob.Object.extend("company");
+                    var query = new Bmob.Query(Diary);
+                    query.include('parent');
+                    query.get(companid, {
+                      success: function (result) {
+                        wx.showToast({
+                          title: '提交成功',
+                          icon:'none',
+                          duration:2000
+                        });
+                        that.setData({
+                          company: object.get('parent_com'),
+                          master: result,
+                          userid: userid,
+                          dataid:'通知',
+                          form: "none", 
+                          form1: 'block'
+                        });
+                      },
+                    });
+                  },
+                });
+              }
+            });
+          },
+        })
+      }
+    } else {
+      wx.showToast({
+        title: '您没有权限',
+        icon:'none',
+        duration:2000
+      })
+    }
+  },
+
+  againsubmit:function(){
+    var that = this;
+    var userid = wx.getStorageSync('user_id');
+    var master = that.data.master.get('parent').objectId;
+    if (master == userid) {
+    that.setData({form:"block",form1:'none'});
+    }else{
+      wx.showToast({
+        title: '您无法进行此操作',
+        icon:'none',
+        duration:2000
+      })
+    }
   },
 
 })

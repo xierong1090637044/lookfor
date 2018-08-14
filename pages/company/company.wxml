@@ -4,8 +4,9 @@
 <view class='MianContent'>
 <image src='{{header}}' style='height:27vh;width:80vw;'></image>
 <view class='itemall'>
-     <view class='item' bindtap='joincompany'>加入公司</view>
      <view class='item' bindtap='createcompany'>创建公司</view>
+     <view class='item' bindtap='createact'>创建活动</view>
+     <view class='item' bindtap='joincompany'>加入公司</view>
      <view class='item' bindtap='mycompany'>我的公司</view>
   </view>
 </view>
@@ -16,26 +17,26 @@
   <form bindsubmit="formSubmit" bindreset="formReset">
     <view class="section">
       <view class="companyname">公司名称：</view>
-      <input name="input1" placeholder="公司名称" class='inputcname' placeholder-style='color:#ddd;font-size:14px;' maxlength='20' bindfocus=''/>
+      <input name="input1" placeholder="公司名称" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='20' bindfocus=''/>
     </view>
     <view class="section">
       <view class="companyname">公司地点：</view>
-      <input name="input2" placeholder="公司地点即为签到地点" class='inputcname' placeholder-style='color:#ddd;font-size:14px;' maxlength='40' value='{{mylocaltion}}' bindtap='chooselocation'/>
+      <input name="input2" placeholder="公司地点即为签到地点" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='40' value='{{mylocaltion}}' bindtap='chooselocation'/>
     </view>
     <view class="section">
       <view class="companyname">联系方式：</view>
-      <input name="input4" class='inputcname' placeholder-style='color:#ddd;font-size:14px;' maxlength='11' placeholder="联系方式" type='number' bindfocus=''/>
+      <input name="input4" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='11' placeholder="联系方式" type='number' bindfocus=''/>
     </view>
     <view class="section">
       <view class="companyname">上班时间：</view>
        <picker mode="time" value="{{time}}" start="03:00" bindchange="bindTimeChange" class='inputcname2'>
-      <input name ='worktime' value='{{time}}' class='addinputstyle' bindfocus='' placeholder='请选择'></input>
+      <input name ='worktime' value='{{time}}' class='addinputstyle' bindfocus='' placeholder='请选择' disabled='true'></input>
       </picker>
     </view>
     <view class="section">
       <view class="companyname">下班时间：</view>
        <picker mode="time" value="{{time1}}" start="17:00" bindchange="bindTimeChange1" class='inputcname2'>
-       <input name ='leavetime' value='{{time1}}' class='addinputstyle' bindfocus=''placeholder='请选择'></input>
+       <input name ='leavetime' value='{{time1}}' class='addinputstyle' bindfocus=''placeholder='请选择' disabled='true'></input>
       </picker>
     </view>
     <view class="section">
@@ -44,6 +45,38 @@
     </view>
     <view class="btn-area">
       <button formType="submit" class='button'>提交</button>
+    </view>
+  </form>
+</view>
+
+<!--创建活动-->
+<view class='mask' style='display:{{maskandform1}}' bindtap='hidden'></view>
+<view class='form' style='display:{{maskandform1}}'>
+  <form bindsubmit="formSubmit1" bindreset="formReset">
+    <view class="section">
+      <view class="companyname">活动名称：</view>
+      <input name="input1" placeholder="活动名称" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='20' bindfocus=''/>
+    </view>
+    <view class="section">
+      <view class="companyname">活动地点：</view>
+      <input name="input2" placeholder="活动地点即为签到地点" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='40' value='{{mylocaltion}}' bindtap='chooselocation'/>
+    </view>
+    <view class="section">
+      <view class="companyname">联系方式：</view>
+      <input name="input4" class='inputcname' placeholder-style='color:#5d5d5d;font-size:14px;' maxlength='11' placeholder="联系方式" type='number' bindfocus=''/>
+    </view>
+    <view class="section">
+      <view class="companyname">签到时间：</view>
+       <picker mode="time" value="{{time}}" start="03:00" bindchange="bindTimeChange" class='inputcname2'>
+      <input name ='worktime' value='{{time}}' class='addinputstyle' bindfocus='' placeholder='请选择' disabled='true'></input>
+      </picker>
+    </view>
+    <view class="section">
+      <view class="companyname">创建人：</view>
+      <input name="input3" class='inputcname1' placeholder-style='color:#fff;font-size:14px;' maxlength='20' disabled='true' value='{{username}}' bindfocus=''/>
+    </view>
+    <view class="btn-area">
+      <button formType="submit" class='button'>创建</button>
     </view>
   </form>
 </view>

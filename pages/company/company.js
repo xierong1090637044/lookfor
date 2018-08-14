@@ -4,16 +4,19 @@ var qqmapsdk;
 Page({
   data: {
     header:'',
-    content: '请填写公司名称',
+    content: '请填写公司/活动名称',
     content1:'未选择地点，将默认为当前位置',
     content2: '您已创建公司，请勿重复创建',
     content3: '电话号码格式有误',
     content4: '请选择上、下班时间',
+    content5: '请选择签到时间',
+    content6: '您已创建活动，请勿重复创建',
     mylocaltion:'',
     username:'',
     latitude:'',
     longitude:'',
     maskandform:'none',
+    maskandform1: 'none',
     time:'',
     time1:'',
     display:'',
@@ -100,6 +103,13 @@ Page({
     })
   },
 
+  /*"创建活动"*/
+  createact: function () {
+    this.setData({
+      maskandform1: 'block'
+    })
+  },
+
   /**加入公司 */
   joincompany:function()
   {
@@ -122,6 +132,9 @@ Page({
   /*"我的公司"*/
   mycompany: function () {
     var that = this;
+    wx.showLoading({
+      title: '加载中',
+    });
     var userid = wx.getStorageSync('user_id');
 
     var Diary = Bmob.Object.extend("member");
@@ -132,12 +145,14 @@ Page({
       success: function (results) {
         console.log("共查询到 " + results.length + " 条记录");
         if (results.length == 0) {
+          wx.hideLoading();
           wx.showToast({
             title: '请先加入公司',
             icon: 'none',
             duration: 2000
           })
         } else {
+          wx.hideLoading();
           wx.navigateTo({
             url: '../mycompany/mycompany'
           })
@@ -193,6 +208,7 @@ Page({
             diary.set("worktime",worktime);
             diary.set("leavetime", leavetime);
             diary.set("companyicon",'');
+            diary.set("tongzhi", '');
             var post = new Post();
             post.id = id;
             diary.set("parent", post);
@@ -235,6 +251,87 @@ Page({
     }
   },
 
+  /*"创建活动隐藏层表单提交"*/
+  formSubmit1: function (e) {
+    var that = this;
+    console.log(e.detail.value);
+    var id = wx.getStorageSync('user_id');
+    var companyname = e.detail.value.input1;
+    var localtion = e.detail.value.input2;
+    var master = e.detail.value.input3;
+    var phone = e.detail.value.input4;
+    var worktime = e.detail.value.worktime;
+    var latitude = that.data.latitude;
+    var longitude = that.data.longitude;
+
+    if (companyname == "") {
+      this.toast(that.data.content);
+    }
+    else if (phone.length < 11) {
+      console.log(phone.length);
+      this.toast(that.data.content3);
+    }
+    else if (worktime == '') {
+      this.toast(that.data.content5);
+    }
+    else {
+      var Diary = Bmob.Object.extend("activity");
+      var query = new Bmob.Query(Diary);
+      query.equalTo("parent", id);
+      // 查询所有数据
+      query.find({
+        success: function (results) {
+          if (results.length == 0) {
+            var Diary = Bmob.Object.extend("activity");
+            var Post = Bmob.Object.extend("user_infor");
+            var diary = new Diary();
+            diary.set("company", companyname);
+            diary.set("localtion", localtion);
+            diary.set("latitude", latitude);
+            diary.set("longitude", longitude);
+            diary.set("worktime", worktime);
+            diary.set("tongzhi", '');
+            var post = new Post();
+            post.id = id;
+            diary.set("parent", post);
+            diary.save(null, {
+              success: function (result) {
+                console.log("日记创建成功, objectId:" + result.id);
+                var companyid = result.id;
+                var Diary = Bmob.Object.extend("member_act");
+                var Post = Bmob.Object.extend("user_infor");
+                var Company = Bmob.Object.extend("activity");
+                var diary = new Diary();
+                var post = new Post();
+                var company = new Company();
+                post.id = id;
+                company.id = companyid;
+                diary.set("phone", phone);
+                diary.set("parent", post);
+                diary.set("parent_com", company);
+                diary.save(null, {
+                  success: function (result) {
+                    console.log("日记创建成功, objectId:" + result.id);
+                    wx.showToast({
+                      title: '活动创建成功',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                    that.setData({
+                      maskandform1: 'none'
+                    })
+                  },
+                });
+              },
+            });
+          } else {
+            that.toast(that.data.content2);
+          }
+        },
+      });
+    }
+  },
+
   chooselocation:function()
   {
     var that = this;
@@ -266,7 +363,8 @@ Page({
   hidden:function()
   {
     this.setData({
-      maskandform:'none'
+      maskandform:'none',
+      maskandform1: 'none'
     })
   },
 

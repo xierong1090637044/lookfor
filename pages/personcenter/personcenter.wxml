@@ -1,4 +1,4 @@
-<canvas style="width: 100%; height: 25vh;background:rgb(32,36,46); position:relative;" canvas-id="fire"></canvas>
+<canvas style="width: 100%; height: 20vh;background:rgb(32,36,46); position:relative;" canvas-id="fire"></canvas>
 <view style='display:{{display}}' class='button'>
    <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" 
  class='button1'>登录</button>
@@ -13,27 +13,43 @@
 
 <view class='itemstyle'>
   <view class='substyle' bindtap='qiandao'>
-    <image src='../../images/qiandao.png' style='width:40px;height:40px'></image>
+    <image src='../../images/qiandao.png' style='width:30px;height:30px'></image>
     <view class='qiandaotext'>签到</view>
   </view>
-  <view class='substyle' bindtap='gotocompany'>
-      <image src='../../images/company.png' style='width:40px;height:40px'></image>
-      <view class='qiandaotext'>公司</view>
-  </view>
-  <view class='substyle' bindtap='mycompany'>
-      <image src='../../images/mycompany.png' style='width:40px;height:40px'></image>
-      <view class='qiandaotext'>我的公司</view>
-  </view>
-   <view class='substyle' bindtap='mymp'>
-      <image src='../../images/mymp.png' style='width:40px;height:40px'></image>
-      <view class='qiandaotext'>我的名片</view>
+  <view class='substyle' bindtap='qiantui'>
+    <image src='../../images/qiantui.png' style='width:30px;height:30px'></image>
+    <view class='qiandaotext'>签退</view>
   </view>
   <view class='substyle' bindtap='scancode'>
-      <image src='../../images/scanqrcode.png' style='width:40px;height:40px'></image>
+      <image src='../../images/scanqrcode.png' style='width:30px;height:30px'></image>
       <view class='qiandaotext'>扫码签到</view>
   </view>
+  <view class='substyle' bindtap='gotocompany'>
+      <image src='../../images/company.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>签到场景</view>
+  </view>
+  <view class='substyle' bindtap='mycompany'>
+      <image src='../../images/mycompany.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>我的公司</view>
+  </view>
+  <view class='substyle' bindtap='myactivity'>
+      <image src='../../images/activity.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>我的活动</view>
+  </view>
+  <!-- <view class='substyle' bindtap='mymp'>
+      <image src='../../images/mymp.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>我的名片</view>
+  </view>-->
+  <view class='substyle' bindtap='weather'>
+      <image src='../../images/weather.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>查看天气</view>
+  </view>
+  <view class='substyle' bindtap='suggestion'>
+      <image src='../../images/suggestion.png' style='width:30px;height:30px'></image>
+      <view class='qiandaotext'>意见反馈</view>
+  </view>
   <view class='substyle' bindtap='aboutus'>
-      <image src='../../images/about_us.png' style='width:40px;height:40px'></image>
+      <image src='../../images/about_us.png' style='width:30px;height:30px'></image>
       <view class='qiandaotext'>关于我们</view>
   </view>
 </view>
@@ -41,3 +57,24 @@
   <image src='{{person1}}' class='person1'></image>
   <image src='{{person2}}' class='person2'></image>
 </view>
+
+<view class='box' style='display:{{box}}'>
+  <view style='margin-bottom:5px;'>贴心小贴士：</view>
+  <view class='boxtext'>1、打开定位开关，定位更加准确！</view>
+  <view class='boxtext'>2、点击我的公司旁边的小图标，可以上传公司头像！</view>
+  <view class='boxtext'>3、快去看看名片吧，那里都长草了！</view>
+</view>
+
+<view style='display:{{mask}}' class='mask' bindtap='hidden1'></view>
+<view class="suggestion" style='display:{{mask}}'>
+  <form bindsubmit="bindFormSubmit">
+    <textarea placeholder="请输入您的想法或者意见" placeholder-style='color:#ddd;font-size:15px;' name="textarea" class='textarea' maxlength='100'/>
+    <button form-type="submit" class='submitbut'> 提交 </button>
+  </form>
+</view>
+<view style='display:{{mask}}' class='suggesttext'>
+  <view>您宝贵的意见将是我们不断完善和改进的动力</view>
+  <view style='color:#ddd;font-size:12px;margin-top:5px;'>（点击任意处关闭）</view>
+</view>
+
+<view style='display:{{mask1}}' class='mask1'></view>

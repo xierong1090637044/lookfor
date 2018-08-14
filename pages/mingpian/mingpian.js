@@ -77,30 +77,11 @@ Page({
   /**加好点击 */
   add:function(){
     var that = this;
-    wx.showActionSheet({
-      itemList: ['手动添加', '自动添加'],
-      success: function (res) {
-        console.log(res.tapIndex)
-        if (res.tapIndex == 0)
-        {
-          that.setData({
-            maskandform1: 'block',
-            allcarditem: null
-          });
-        }else
-        {
-          wx.showActionSheet({
-            itemList: ['上传图片'],
-            success: function (res) {
-              if (res.tapIndex ==0)
-              {
-                that.uploadmpimg();
-              }
-            },
-          })
-        }
-      },
-    })
+   
+    that.setData({
+        maskandform1: 'block',
+        allcarditem: null
+    });
   },
 
   //上传名片图片自动识别

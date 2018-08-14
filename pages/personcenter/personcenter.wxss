@@ -103,8 +103,8 @@
 }
 .itemstyle
 {
-  width:calc(100% - 10px);
-  padding:10px 5px 10px 5px;
+  width:100% ;
+  padding:10px 0px 10px 0px;
   background: rgb(0, 34, 40);
   margin: 10px 0% 10px 0%;
 }
@@ -117,6 +117,7 @@
   border-radius: 4px;
   display: inline-block;
   margin:5px 0px 5px 10px;
+  font-size: 15px;
 }
 .qiandaotext
 {
@@ -136,4 +137,102 @@
   height: 35vh;
   width: 50%;
   float: right;
+}
+.box{
+  position: fixed;
+  bottom:6vh;
+  left:33vw;
+  width: 180px;
+  background: #088cb7;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  padding: 5px;
+  color: #fff;
+  }
+.box:before{
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  right: 100%;
+  bottom: 20%;
+  border-top: 13px solid transparent;
+  border-right: 26px solid #088cb7;             
+  border-bottom: 13px solid transparent;
+}
+.boxtext
+{
+  line-height: 20px;
+}
+.calendar {
+    background-color: #eeedff;
+    padding-top: 10px;
+}
+.header {
+    font-size: large;
+    color: #605eac;
+}
+.board {
+    background-color: #dddcff;
+    color: white;
+}
+
+.mask
+{
+  position: fixed;
+  top:0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color:#0a8d8b;
+  z-index: 100;
+}
+.mask1
+{
+  position: fixed;
+  top:0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: transparent;
+  z-index: 100;
+}
+.suggestion
+{
+  position: fixed;
+  top:16%;
+  left: calc(20% - 8px);
+  z-index: 101;
+  width: 60%;
+  color: #fff;
+}
+.textarea
+{
+  width: 100%;
+  border: 1px solid#fff;
+  border-radius: 4px;
+  margin-bottom: 40px;
+  font-size: 15px;
+  padding: 8px 4px;
+}
+.submitbut
+{
+  line-height: 40px;
+  width: 60%;
+  font-size: 15px;
+}
+.suggesttext
+{
+  position: fixed;
+  bottom:20%;
+  left: 0;
+  width: 100%;
+  font-size: 15px;
+  z-index: 101;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
 }

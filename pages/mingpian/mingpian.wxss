@@ -159,9 +159,10 @@ color: transparent;
 }
 .scrollheight
 {
-  height: 98vh;
+  height: 92vh;
   overflow-y: scroll;
   color: #fff;
+  margin-top: 6vh;
 }
 .allcardbg
 {
@@ -266,7 +267,7 @@ color: transparent;
 .ssitem
 {
   position: fixed;
-  top:0%;
+  top:6%;
   left: 0%;
   width: 100%;
   z-index: 105;
@@ -312,23 +313,36 @@ color: transparent;
 .nocontentimgview
 {
   position: fixed;
-  height: 100vh;
-  top: 0%;
+  height: 95vh;
+  top: 5vh;
   width: 100%;
   text-align: center;
-  background: #2ca879;
 }
 .nocontentimg
 {
   width: 60%;
   height: 40vh;
+  margin-top: 30%;
 }
 .nocontenttext
 {
   width: 100%;
   text-align: center;
   color: #fff;
-  margin-top: 20%;
+  margin-top: -7;
   font-size: 18px;
   font-style: italic;
+}
+.options
+{
+  position: fixed;
+  top:0;
+  left: 0;
+  width: calc(100% - 8px);
+  height: 5vh;
+  padding: 4px;
+  background: #207e96;
+  line-height: 5vh;
+  color: #fff;
+  font-size: 15px;
 }

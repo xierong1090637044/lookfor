@@ -1,0 +1,88 @@
+ <!--pages/mycompany/mycompany.wxml-->
+<view class='MainContain'>
+  <view class='companyitem'>
+    <text>活动名称：</text>
+    <text>{{company.company}}</text>
+  </view>
+  <view class='companyitem' style='display:inline-block'>
+    <text>创建人：</text>
+    <text>{{master.parent.nickName}}</text>
+  </view>
+  <view class='companyitem'>
+    <text>签到地点：</text>
+    <text>{{company.localtion}}</text>
+  </view>
+  <view class='companyitem'>
+    <text>创建时间：</text>
+    <text>{{company.createdAt}}</text>
+  </view>
+  <view class='icon1'>
+     <i class="icon iconfont icon-mengxiang"></i> 
+  </view>
+</view>
+
+<view class='floatmain'>
+  <view class='floatleftitem'>
+     <view data-id='签到码' class="{{dataid == '签到码' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码</view>
+     <view data-id='签到码出勤' class="{{dataid == '签到码出勤' ? 'floatitem2' : 'floatitem1'}}"   bindtap='getdataid'>签到码出勤</view>
+     <view class='tuichu' bindtap='goout'>退出</view>
+  </view>
+
+
+    <!--签到码考勤列表-->
+  <view class="floatrightitem {{dataid == '签到码出勤' ? 'displayshow' : 'displaynone'}}">
+  <view style='font-size:15px;text-align:center;padding:5px 0;border-bottom:1px solid#ddd'>
+    <text>当前签到总人数：</text><text style='color:#f30'>{{people}}</text>
+  </view>
+  <view wx:if="{{codeqd==''}}" style='text-align:center'>
+    <view class='icon2' style='margin-top:10%;color:#2ca879;font-size:30px;'>
+      <i class="iconsm iconfont icon-common-bukaixin-copy"></i> 
+    </view>
+    <view style='font-size:15px;margin-top:5%'>去使用二维码签到吧</view>
+  </view>
+  <view wx:else>
+     <view wx:for="{{codeqd}}" wx:key="{{index}}" style='float:left;width:100%'>
+        <view class='itemlist1'>
+          <image src='{{item.parent.avatarUrl}}' class='avatar'></image>
+           <view class='nickname'>
+             <view>
+               <view style='display:inline-block'>{{item.parent.nickName}}</view>
+              </view>
+             <view>
+                <view style='line-height:18px;font-size:12px'>本月扫码签到：
+                   <text style='color:#00abff'>{{item.qiandao}}</text>
+                </view>
+                <view style='line-height:18px;font-size:12px;'>签到时间：
+                   <text style='color:#00abff'>{{item.updatedAt}}</text>
+                </view>
+              </view>
+           </view>
+        </view>
+     </view>
+     </view>
+  </view>
+
+  <!--签到码-->
+  <view class="floatrightitem {{dataid == '签到码' ? 'displayshow' : 'displaynone'}}">
+  <view style='display:{{qiandaomadis}}'>
+    <view class='icon2' style='margin-top:5%'><i class="icon22 iconfont icon-kulian1"></i> </view>
+    <view style='text-align:center;font-size:15px;margin-top:15px;'>当前还未生成签到码</view>
+    <view wx:if='{{company.parent.objectId == userid}}'style='text-align:center;color:#2ca879;margin-top:20px;' bindtap='getcodeimg'>生成</view>
+  </view>
+
+    <view class='codeimageview' style='display:{{codedis}}'>
+      <image src='{{codeurl}}' class='codeimage' bindlongpress='savecode'></image>
+      <view style='font-size:12px;color:#999'>（长按复制二维码链接）</view>
+      <view class='codetext'>当出现二维码不存在或者过期的情况，请再次生成</view>
+      <view class='getagain' bindtap='getagain1'>
+        <text>再次生成</text>
+        <text style='font-size:12px;'>(旧二维码不过期)</text>
+      </view>
+      <view class='getagain' bindtap='getagain'>
+        <text>重新生成</text>
+        <text style='font-size:12px;'>(旧二维码将过期)</text>
+      </view>
+    </view>
+  </view>
+</view>
+

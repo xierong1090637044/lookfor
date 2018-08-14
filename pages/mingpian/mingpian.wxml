@@ -5,19 +5,13 @@
 <view class='settingimg' animation='{{animationData}}' bindtap='setting'>
   <image src='../../images/setting.png' style='width:100%;height:100%'/>
 </view>
-<view class='settingimg' animation='{{animationData1}}' bindtap='add' style='bottom:20% !important;opacity:0;'>
-  <image src='../../images/add.png' style='width:100%;height:100%'/>
-</view>
-<view class='settingimg' animation='{{animationData1}}' bindtap='mymp' style='bottom:30% !important;opacity:0;'>
+<view class='settingimg' animation='{{animationData1}}' bindtap='mymp' style='bottom:20% !important;opacity:0;'>
   <image src='../../images/mymp.png' style='width:100%;height:100%'/>
 </view>
-<view class='settingimg' animation='{{animationData1}}' bindtap='modify' style='bottom:40% !important;opacity:0;'>
+<view class='settingimg' animation='{{animationData1}}' bindtap='modify' style='bottom:30% !important;opacity:0;'>
   <image src='../../images/modify.png' style='width:100%;height:100%'/>
 </view>
-<view class='settingimg' animation='{{animationData1}}' bindtap='paixu' style='bottom:50% !important;opacity:0;'>
-  <image src='../../images/paixu.png' style='width:100%;height:100%'/>
-</view>
-<view class='settingimg' animation='{{animationData1}}' bindtap='sousuo1' style='bottom:60% !important;opacity:0;'>
+<view class='settingimg' animation='{{animationData1}}' bindtap='sousuo1' style='bottom:40% !important;opacity:0;'>
   <image src='../../images/sousuo1.png' style='width:100%;height:100%'/>
 </view>
 
@@ -131,6 +125,10 @@
 
 <view class='nocontentimgview' style="display:{{nocontent}}">
   <image src='{{nocontentimg}}' class='nocontentimg' ></image>
-  <view class='nocontenttext'>暂时未添加名片</view>
+  <!--<view class='nocontenttext'>暂时未添加名片</view>-->
+</view>
+<view class='options'>
+ <view style='display:inline-block' bindtap='add'>添加</view>
+ <view style='display:inline-block;float:right' bindtap='paixu'>排序</view>
 </view>
 
